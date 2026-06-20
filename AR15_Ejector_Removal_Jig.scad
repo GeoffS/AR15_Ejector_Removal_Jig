@@ -16,14 +16,22 @@ module cartridgeInsert()
 {
 	difference()
 	{
-		cylinder(d1=7.4, d2=7.9, h=6.5);
-		tcy([0,0,firstLayerHeight+2*layerHeight], d=6.1, h=100);
+		union()
+		{
+			d1 = 7.4;
+			h = 6.5;
+			cz = firstLayerHeight+2*layerHeight;
+			simpleChamferedCylinderDoubleEnded(d = d1, h = h, cz = cz);
+			translate([0,0,cz]) cylinder(d1=7.4, d2=7.9, h=h-cz);
+		}
+		
+		tcy([0,0,firstLayerHeight+4*layerHeight], d=6.1, h=100);
 	}
 }
 
 module clip(d=0)
 {
-	//tc([-200, -400-d, -10], 400);
+	tc([-200, -400-d, -10], 400);
 }
 
 if(developmentRender)
