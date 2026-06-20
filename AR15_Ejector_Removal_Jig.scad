@@ -31,7 +31,7 @@ module cartridgeInsert()
 
 module clip(d=0)
 {
-	tc([-200, -400-d, -10], 400);
+	// tc([-200, -400-d, -10], 400);
 }
 
 if(developmentRender)
