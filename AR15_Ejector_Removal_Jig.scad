@@ -12,14 +12,19 @@ makeCartridgeInsert = false;
 boltLugsOD = 19; //2*0.370  * mm;
 boltLugsID = 14; //2*0.265 * mm;
 boltLugsY = 7.5; //0.280 * mm;
+boldRearOD = 13.5;
+
+camPinCtrY = 1.431 * mm;
+camPinAngle = 45/2;
+campPinOD = 8.1;
 
 boltY = 45; //2 * mm;
 
 cartrdigeBaseY = 12;
 
-wallX = 6;
+wallX = 10;
 wallY = 20 + cartrdigeBaseY;
-wallZ = 4; //firstLayerHeight + 2*layerHeight;
+wallZ = 12; //firstLayerHeight + 2*layerHeight;
 aboveBoltZ = 2;
 
 jigX = boltLugsOD + 2*wallX;
@@ -45,7 +50,7 @@ module jig()
 			// Bolt body just behind the lugs:
 			cylinder(d=boltLugsID, h=13);
 			// Bolt body just behind the the extractor pivot:
-			tcy([0,0,0], d=13.5, h=100);
+			tcy([0,0,0], d=boldRearOD, h=100);
 		}
 
 		// Screw:
@@ -56,6 +61,7 @@ module jig()
 			x = d * 0.3;
 			tcu([-x/2, -30, 0], [x, 100, d/2]);
 		}
+
 		// Nut recess:
 		rotate([-90,0,0]) rotate([0,0,30]) translate([0,0,-cartrdigeBaseY]) 
 		{
@@ -67,6 +73,12 @@ module jig()
 			}
 		}
 		
+		// Cam-Pin hole:
+		translate([0,camPinCtrY,0]) rotate([0,-camPinAngle,0]) 
+		{
+			tcy([0,0,-50], d=campPinOD, h=100);
+			tcy([0,0,-100-boldRearOD/2-5.5], d=14, h=100);
+		}
 	}
 }
 
@@ -106,7 +118,8 @@ module cartridgeInsert()
 module clip(d=0)
 {
 	// tc([-200, -400-d, -10], 400);
-	tcu([0-d, -200, -200], 400);
+	// tcu([0-d, -200, -200], 400);
+	// tcu([-200, camPinCtrY-d, -200], 400);
 }
 
 if(developmentRender)
