@@ -21,11 +21,12 @@ campPinOD = 8.1;
 boltY = 48; //2 * mm;
 
 cartrdigeBaseY = 12;
+nutY = 7;
 
 wallX = 10;
-wallY = 20 + cartrdigeBaseY;
+wallY = 6 + nutY + cartrdigeBaseY;
 wallZ = 12; //firstLayerHeight + 2*layerHeight;
-aboveBoltZ = 2;
+aboveBoltZ = -2;
 
 jigX = boltLugsOD + 2*wallX;
 jigY = wallY + boltY;
@@ -38,9 +39,14 @@ module jig()
 	difference()
 	{
 		// Exterior:
+		union()
+		{
 		translate([0, jigY/2-wallY, 0]) hull() doubleX() doubleY() 
 			translate([jigX/2-jigCornerDiaXY/2, jigY/2-jigCornerDiaXY/2,-wallZ-boltLugsOD/2]) 
 				simpleChamferedCylinderDoubleEnded(d=jigCornerDiaXY, h=jigZ, cz=jigCZ);
+		// Bump for nut recessL
+		translate([0, jigCZ, 0]) rotate([90, 0, 0]) simpleChamferedCylinderDoubleEnded(d=22, h=wallY+jigCZ, cz=jigCZ);
+		}
 
 		// Bolt Stuff:
 		boltRecess()
@@ -65,7 +71,7 @@ module jig()
 		// Nut recess:
 		rotate([-90,0,0]) rotate([0,0,30]) translate([0,0,-cartrdigeBaseY]) 
 		{
-			tcy([0,0,-7], d=15.8+0.2, h=25, $fn=6);
+			tcy([0,0,-nutY], d=15.8+0.2, h=25, $fn=6);
 			hull()
 			{
 				tcy([0,0,0], d=15.8+0.2, h=1, $fn=6);
