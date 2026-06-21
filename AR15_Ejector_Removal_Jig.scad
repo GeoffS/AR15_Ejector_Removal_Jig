@@ -57,7 +57,15 @@ module jig()
 			tcu([-x/2, -30, 0], [x, 100, d/2]);
 		}
 		// Nut recess:
-		rotate([-90,0,0]) rotate([0,0,30]) tcy([0,0,-7-cartrdigeBaseY], d=15.8+0.2, h=25, $fn=6);
+		rotate([-90,0,0]) rotate([0,0,30]) translate([0,0,-cartrdigeBaseY]) 
+		{
+			tcy([0,0,-7], d=15.8+0.2, h=25, $fn=6);
+			hull()
+			{
+				tcy([0,0,0], d=15.8+0.2, h=1, $fn=6);
+				tcy([0,0,cartrdigeBaseY], d=18, h=1, $fn=6);
+			}
+		}
 		
 	}
 }
