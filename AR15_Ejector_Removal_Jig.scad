@@ -18,7 +18,7 @@ camPinCtrY = 1.431 * mm;
 camPinAngle = 45/2;
 campPinOD = 8.1;
 
-boltY = 45; //2 * mm;
+boltY = 48; //2 * mm;
 
 cartrdigeBaseY = 12;
 
