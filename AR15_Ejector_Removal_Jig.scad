@@ -18,6 +18,10 @@ camPinCtrY = 1.431 * mm;
 camPinAngle = 45/2;
 campPinOD = 8.1;
 
+ejectorPinOffsetX = 0.113 * mm;
+ejectorPinOffsetY = 0.372 * mm;
+ejectorPinRecesssDia = 2*0.032*mm + 1;
+
 boltY = 48; //2 * mm;
 
 cartrdigeBaseY = 12;
@@ -41,11 +45,12 @@ module jig()
 		// Exterior:
 		union()
 		{
-		translate([0, jigY/2-wallY, 0]) hull() doubleX() doubleY() 
-			translate([jigX/2-jigCornerDiaXY/2, jigY/2-jigCornerDiaXY/2,-wallZ-boltLugsOD/2]) 
-				simpleChamferedCylinderDoubleEnded(d=jigCornerDiaXY, h=jigZ, cz=jigCZ);
-		// Bump for nut recessL
-		translate([0, jigCZ, 0]) rotate([90, 0, 0]) simpleChamferedCylinderDoubleEnded(d=22, h=wallY+jigCZ, cz=jigCZ);
+			// Main jig body:
+			translate([0, jigY/2-wallY, 0]) hull() doubleX() doubleY() 
+				translate([jigX/2-jigCornerDiaXY/2, jigY/2-jigCornerDiaXY/2,-wallZ-boltLugsOD/2]) 
+					simpleChamferedCylinderDoubleEnded(d=jigCornerDiaXY, h=jigZ, cz=jigCZ);
+			// Bump for nut recessL
+			translate([0, jigCZ, 0]) rotate([90, 0, 0]) simpleChamferedCylinderDoubleEnded(d=22, h=wallY+jigCZ, cz=jigCZ);
 		}
 
 		// Bolt Stuff:
@@ -58,6 +63,9 @@ module jig()
 			// Bolt body just behind the the extractor pivot:
 			tcy([0,0,0], d=boldRearOD, h=100);
 		}
+
+		// Ejector pin hole:
+		translate([-ejectorPinOffsetX, ejectorPinOffsetY, 0]) tcy([0,0,-50], d=ejectorPinRecesssDia, h=100);
 
 		// Screw:
 		hull()
@@ -92,9 +100,9 @@ module boltRecess()
 {
 	echo(str("Bolt recess(", $children, ")"));
 
-	rotate([-90, 0, 0]) for(i = [0, $children-1, 1])
+	rotate([-90, 0, 0]) for(i = [0, 1, $children-1])
 	{
-		echo(str("Bolt recess() i = ", i));
+		echo(str("Bolt recess()  i = ", i));
 
 		hull()
 		{
