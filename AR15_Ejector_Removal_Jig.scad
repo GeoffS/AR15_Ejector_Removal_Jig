@@ -7,9 +7,27 @@ layerHeight = 0.2;
 makeJig = false;
 makeCartridgeInsert = false;
 
+boltLugsOD = 0.370  * mm;
+
+wallX = 6;
+wallY = 6;
+wallZ = 4; //firstLayerHeight + 2*layerHeight;
+aboveBoltZ = 4;
+
+jigX = boltLugsOD + 2*wallX;
+jigY = 2*mm + wallY;
+jigZ = boltLugsOD + wallZ + aboveBoltZ;
+
+jigCornerDiaXY = 10;
+jigCZ = 2;
 module jig()
 {
-	//echo(str("jig(", angle, ")"));
+	difference()
+	{
+		hull() doubleX() doubleY() 
+			translate([jigX/2-jigCornerDiaXY/2, jigY/2-jigCornerDiaXY/2,-wallZ-boltLugsOD/2]) 
+				simpleChamferedCylinderDoubleEnded(d=jigCornerDiaXY, h=jigZ, cz=jigCZ);
+	}
 }
 
 module cartridgeInsert()
@@ -36,8 +54,8 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	//display() jig();
-	display() cartridgeInsert();
+	display() jig();
+	// display() cartridgeInsert();
 }
 else
 {
