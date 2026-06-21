@@ -4,22 +4,26 @@ include <../OpenSCAD_Lib/chamferedCylinders.scad>
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
+mm = mm_per_inch;
+
 makeJig = false;
 makeCartridgeInsert = false;
 
-boltLugsOD = 2*0.370  * mm;
-boltLugsID = 2*0.265 * mm;
-boltLugsY = 0.280 * mm;
+boltLugsOD = 19; //2*0.370  * mm;
+boltLugsID = 14; //2*0.265 * mm;
+boltLugsY = 7.5; //0.280 * mm;
 
-boltY = 2 * mm;
+boltY = 45; //2 * mm;
+
+cartrdigeBaseY = 12;
 
 wallX = 6;
-wallY = 20;
+wallY = 20 + cartrdigeBaseY;
 wallZ = 4; //firstLayerHeight + 2*layerHeight;
-aboveBoltZ = 4;
+aboveBoltZ = 2;
 
 jigX = boltLugsOD + 2*wallX;
-jigY = boltY + wallY;
+jigY = wallY + boltY;
 jigZ = boltLugsOD + wallZ + aboveBoltZ;
 
 jigCornerDiaXY = 10;
@@ -38,27 +42,22 @@ module jig()
 		{
 			// Lugs:
 			cylinder(d=boltLugsOD, h=boltLugsY);
-			// Bolt body:
-			cylinder(d=boltLugsID, h=200);
+			// Bolt body just behind the lugs:
+			cylinder(d=boltLugsID, h=13);
+			// Bolt body just behind the the extractor pivot:
+			tcy([0,0,0], d=13.5, h=100);
 		}
 
 		// Screw:
 		hull()
 		{
-			d = 8.1;
-			rotate([-90,0,0]) tcy([0,0,-30], d=d, h=100);
+			d = 8.2;
+			rotate([-90,0,0]) tcy([0,0,-50], d=d, h=100);
 			x = d * 0.3;
 			tcu([-x/2, -30, 0], [x, 100, d/2]);
 		}
-		rotate([-90,0,0]) rotate([0,0,30]) tcy([0,0,-7], d=14.3+0.15, h=10, $fn=6);
-		
-	}
-}
-
-module bolt()
-{
-	
-	{
+		// Nut recess:
+		rotate([-90,0,0]) rotate([0,0,30]) tcy([0,0,-7-cartrdigeBaseY], d=15.8+0.2, h=25, $fn=6);
 		
 	}
 }
@@ -67,8 +66,10 @@ module boltRecess()
 {
 	echo(str("Bolt recess(", $children, ")"));
 
-	rotate([-90, 0, 0]) for(i = [0, $children-1])
+	rotate([-90, 0, 0]) for(i = [0, $children-1, 1])
 	{
+		echo(str("Bolt recess() i = ", i));
+
 		hull()
 		{
 			children(i);
