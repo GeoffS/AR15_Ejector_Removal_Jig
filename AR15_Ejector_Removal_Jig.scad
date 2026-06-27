@@ -112,7 +112,7 @@ module boltRecess()
 	}
 }
 
-module cartridgeInsert()
+module m6ScrewCartridgeInsert()
 {
 	difference()
 	{
@@ -139,10 +139,10 @@ module clip(d=0)
 if(developmentRender)
 {
 	display() jig();
-	// display() cartridgeInsert();
+	// display() m6ScrewCartridgeInsert();
 }
 else
 {
 	if(makeJig) jig();
-	if(makeCartridgeInsert) cartridgeInsert();
+	if(makeCartridgeInsert) m6ScrewCartridgeInsert();
 }
