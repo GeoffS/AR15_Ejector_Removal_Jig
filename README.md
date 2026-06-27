@@ -58,6 +58,7 @@ I usually grab the `zip` installation and unzip it into a directory like `C:\too
 2. Open a shell, and navigate to the directory where this repo is located.
 
 1. Run the command: </br>
+(the path after the `-osc` option is the one you noted above) </br>
 `python ..\OpenSCAD_Lib\makeStls.py .\AR15_Ejector_Removal_Jig.scad -osc C:\tools\OpenSCAD-2025.12.09-x86-64\openscad.exe`
 
 If all went well you should see these lines at the end of the output:
