@@ -4,8 +4,6 @@ include <../OpenSCAD_Lib/chamferedCylinders.scad>
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
-mm = mm_per_inch;
-
 makeRightJig = false;
 makeLeftJig = false;
 makeCartridgeInsert = false;
