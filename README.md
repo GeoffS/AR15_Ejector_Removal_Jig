@@ -16,7 +16,7 @@ Thesee are probably a bit on the "light" side, but I used:
 * 0.4mm nozzle.
 * Two perimeters.
 * Three botom layers and five top layers.
-* THe default Banbu slicer perimeter widths (~0.42mm) and layer height (0.2mm).
+* The default Banbu slicer perimeter widths (~0.42mm) and layer height (0.2mm).
 * 15% gyroid infill.
 
 ## Assembly
