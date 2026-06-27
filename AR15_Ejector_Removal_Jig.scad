@@ -38,14 +38,14 @@ jigZ = boltLugsOD + wallZ + aboveBoltZ;
 
 jigCornerDiaXY = 10;
 jigCZ = 2;
-module jig()
+module rightJig()
 {
 	difference()
 	{
 		// Exterior:
 		union()
 		{
-			// Main jig body:
+			// Main rightJig body:
 			translate([0, jigY/2-wallY, 0]) hull() doubleX() doubleY() 
 				translate([jigX/2-jigCornerDiaXY/2, jigY/2-jigCornerDiaXY/2,-wallZ-boltLugsOD/2]) 
 					simpleChamferedCylinderDoubleEnded(d=jigCornerDiaXY, h=jigZ, cz=jigCZ);
@@ -138,11 +138,11 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() jig();
+	display() rightJig();
 	// display() m6ScrewCartridgeInsert();
 }
 else
 {
-	if(makeJig) jig();
+	if(makeJig) rightJig();
 	if(makeCartridgeInsert) m6ScrewCartridgeInsert();
 }
