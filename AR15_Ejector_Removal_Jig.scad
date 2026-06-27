@@ -6,7 +6,8 @@ layerHeight = 0.2;
 
 mm = mm_per_inch;
 
-makeJig = false;
+makeRightJig = false;
+makeLeftJig = false;
 makeCartridgeInsert = false;
 
 boltLugsOD = 19; //2*0.370  * mm;
@@ -38,7 +39,31 @@ jigZ = boltLugsOD + wallZ + aboveBoltZ;
 
 jigCornerDiaXY = 10;
 jigCZ = 2;
+
 module rightJig()
+{
+	difference() 
+	{
+		jigBase();
+		ejectorPinHole();
+		rightCamPinHole();
+	}
+}
+
+module leftJig()
+{
+	difference() 
+	{
+		jigBase();
+		mirror([1,0,0])
+		{
+			ejectorPinHole();
+			rightCamPinHole();
+		}
+	}
+}
+
+module jigBase()
 {
 	difference()
 	{
@@ -65,7 +90,7 @@ module rightJig()
 		}
 
 		// Ejector pin hole:
-		translate([-ejectorPinOffsetX, ejectorPinOffsetY, 0]) tcy([0,0,-50], d=ejectorPinRecesssDia, h=100);
+		
 
 		// Screw:
 		hull()
@@ -88,11 +113,21 @@ module rightJig()
 		}
 		
 		// Cam-Pin hole:
-		translate([0,camPinCtrY,0]) rotate([0,-camPinAngle,0]) 
-		{
-			tcy([0,0,-50], d=campPinOD, h=100);
-			tcy([0,0,-100-boldRearOD/2-5.5], d=14, h=100);
-		}
+		
+	}
+}
+
+module ejectorPinHole()
+{
+	translate([-ejectorPinOffsetX, ejectorPinOffsetY, 0]) tcy([0,0,-50], d=ejectorPinRecesssDia, h=100);
+}
+
+module rightCamPinHole()
+{
+	translate([0,camPinCtrY,0]) rotate([0,-camPinAngle,0]) 
+	{
+		tcy([0,0,-50], d=campPinOD, h=100);
+		tcy([0,0,-100-boldRearOD/2-5.5], d=14, h=100);
 	}
 }
 
@@ -139,10 +174,12 @@ module clip(d=0)
 if(developmentRender)
 {
 	display() rightJig();
+	display() translate([-60,0,0]) leftJig();
 	// display() m6ScrewCartridgeInsert();
 }
 else
 {
-	if(makeJig) rightJig();
+	if(makeRightJig) rightJig();
+	if(makeLeftJig) leftJig();
 	if(makeCartridgeInsert) m6ScrewCartridgeInsert();
 }
