@@ -60,7 +60,13 @@ I usually grab the `zip` installation and unzip it into a directory like `C:\too
 1. Run the command: </br>
 `python ..\OpenSCAD_Lib\makeStls.py .\AR15_Ejector_Removal_Jig.scad -osc C:\tools\OpenSCAD-2025.12.09-x86-64\openscad.exe`
 
-You should get three `.stl` files in the parent directory:
+If all went well you should see these lines at the end of the output:
+```
+All commands completed with no errors.
+Done!
+```
+
+You should also get three `.stl` files in the parent directory:
 * AR15_Ejector_Removal_Jig LeftJig.stl
 * AR15_Ejector_Removal_Jig RightJig.stl
 * AR15_Ejector_Removal_Jig CartridgeInsert.stl
